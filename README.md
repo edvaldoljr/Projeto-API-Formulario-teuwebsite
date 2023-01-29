@@ -12,6 +12,14 @@ Em resumo, a aplicação é uma ferramenta simples e fácil de usar para gerenci
 
 
 
+## Para rodar esta aplicação em sua máquina, você precisará dos seguintes requisitos:
+
+- Um ambiente de desenvolvimento Java configurado, incluindo o JDK (Java Development Kit) e o Eclipse, IntelliJ IDEA ou outra IDE Java de sua escolha
+- Banco de dados H2, configurado e rodando na sua máquina.
+- Uma instalação do Maven para gerenciar as dependências do projeto
+- Certifique-se de que você tenha as dependências corretas, como spring-data-jpa e spring-web, adicionadas ao seu arquivo pom.xml
+- Certifique-se de que a porta 8080 não está sendo usada por outra aplicação em sua máquina.
+
 ## Classe Entity
 
 Este é o código de uma classe Java chamada "ContactFormEntity", que representa uma entidade de formulário de contato no banco de dados.
@@ -138,61 +146,88 @@ public class ContactFormService {
     public ContactFormService(ContactFormRepository contactFormRepository) {
         this.contactFormRepository = contactFormRepository;
     }
+```
 
-   // Método para salvar um novo contato no banco de dado
-    public ContactFormEntity saveContact(ContactFormEntity contactFormEntity) {
-        return contactFormRepository.save(contactFormEntity);
-    }
+```java
+ // Método para salvar um novo contato no banco de dado
+    // Declaração de uma função/método chamado saveContact que recebe como parâmetro um objeto do 		tipo ContactFormEntity e retorna um objeto do mesmo tipo
+	public ContactFormEntity saveContact(ContactFormEntity contactFormEntity) {
+    // Utiliza o método save do repositório de contato para salvar o contato fornecido como parâmetro 		e retorna o objeto salvo
+    return contactFormRepository.save(contactFormEntity);
+}
+```
+
+Este código declara uma função/método chamado saveContact que recebe como parâmetro um objeto do tipo ContactFormEntity e retorna um objeto do mesmo tipo. Dentro da função, ele utiliza o método save do repositório de contato para salvar o contato fornecido como parâmetro e retorna o objeto salvo. Esse método pode ser usado para criar ou atualizar um contato existente no banco de dados, dependendo do estado do objeto passado como parâmetro.
+
+```java
 
     // Método para retornar todos os contatos armazenados no banco de dados
-    public List<ContactFormEntity> getContact() {
-        return contactFormRepository.findAll();
-    }
+    // Declaração de uma função/método chamado getContact que retorna uma lista de objetos do tipo 		ContactFormEntity
+	public List<ContactFormEntity> getContact() {
+    // Utiliza o método findAll do repositório de contato para retornar todos os contatos existentes 	na base de dados
+    return contactFormRepository.findAll();
+}
+```
 
-    // Método para retornar um contato específico pelo id
-    public Optional<ContactFormEntity> getConactById(Long id) {
-        return contactFormRepository.findById(id);
-    }
-    
-    // Método para deletar um contato específico pelo id
+Este código declara uma função/método chamado getContact que retorna uma lista de objetos do tipo ContactFormEntity. Dentro da função, ele utiliza o método findAll do repositório de contato para retornar todos os contatos existentes na base de dados. Esse método é utilizado para buscar todos os contatos armazenados no banco de dados.
+
+```java
+ // Método para retornar um contato específico pelo id
+    // Declaração de uma função/método chamado getConactById que retorna um objeto do tipo Optional   		de ContactFormEntity
+	public Optional<ContactFormEntity> getConactById(Long id) {
+    // Utiliza o método findById do repositório de contato para encontrar um contato pelo id e 			retorna o resultado
+    return contactFormRepository.findById(id);
+}
+```
+
+Este código declara uma função/método chamado getConactById que retorna um objeto do tipo Optional de ContactFormEntity. Dentro da função, ele utiliza o método findById do repositório de contato para encontrar um contato pelo id fornecido como parâmetro e retorna o resultado. O tipo Optional é utilizado para indicar que o método pode retornar um valor nulo, caso não seja encontrado nenhum contato com o id especificado.
+
+```java
+// Método para deletar um contato específico pelo id
     public void deleteContact(Long id) {
         contactFormRepository.deleteById(id);
     }
-
-    // Método para retornar todos os emails armazenados no banco de dados
-    public List<String> findAllEmails() {
-        List<ContactFormEntity> allContacts = contactFormRepository.findAll();
-        List<String> allEmails = new ArrayList<>();
-        for (ContactFormEntity contactForm : allContacts) {
-            allEmails.add(contactForm.getEmail());
-        }
-        return allEmails;
-    }
-
-     // Método para retornar todos os telefones armazenados no banco de dados
-    public List<String> findAllPhones() {
-        return contactFormRepository.findAllPhones();
-    }
-    
-    // Método para buscar apenas os telefones
-    public List<String> findAllPhones() {
-        // busca todos os contatos cadastrados
-        List<ContactFormEntity> allContacts = contactFormRepository.findAll();
-        // cria uma lista vazia para armazenar os telefones
-        List<String> allPhones = new ArrayList<>();
-        // percorre a lista de contatos
-        for (ContactFormEntity contactForm : allContacts) {
-            // adiciona o telefone do contato atual na lista de telefones
-            allPhones.add(contactForm.getPhone());
-        }
-        return allPhones;
-    }
-
-}
-
 ```
 
+Este código declara uma função/método chamado deleteContact que recebe um parâmetro do tipo Long e não tem retorno. Dentro da função, ele utiliza o método deleteById do repositório de contato para remover o contato com o id fornecido como parâmetro. Esse método é utilizado para remover um contato específico armazenado no banco de dados, com base no id fornecido como parâmetro.
 
+```java
+// Método para retornar todos os emails armazenados no banco de dados
+    // Declaração de uma função/método chamado findAllEmails que retorna uma lista de strings
+	public List<String> findAllEmails() {
+    // Cria uma variável chamada allContacts que guarda todos os contatos obtidos através do método f	 indAll do repositório de contato
+    List<ContactFormEntity> allContacts = contactFormRepository.findAll();
+    // Cria uma lista vazia de strings chamada allEmails
+    List<String> allEmails = new ArrayList<>();
+    // Itera através de cada contato na lista allContacts
+    for (ContactFormEntity contactForm : allContacts) {
+        // Adiciona o email do contato atual para a lista allEmails
+        allEmails.add(contactForm.getEmail());
+    }
+    // Retorna a lista de todos os emails
+    return allEmails;
+	}
+```
+
+Este código declara uma função/método chamado findAllEmails que retorna uma lista de strings. Dentro da função, ele cria uma variável chamada allContacts que guarda todos os contatos obtidos através do método findAll do repositório de contato. Em seguida, ele cria uma lista vazia de strings chamada allEmails. Ele então itera através de cada contato na lista allContacts e adiciona o email do contato atual para a lista allEmails. Por fim, ele retorna a lista allEmails que contém todos os emails dos contatos.
+
+```java
+/ Declaração de uma função/método chamado findAllPhones que retorna uma lista de strings
+public List<String> findAllPhones() {
+    // busca todos os contatos cadastrados através do método findAll do repositório de contato
+    List<ContactFormEntity> allContacts = contactFormRepository.findAll();
+    // cria uma lista vazia para armazenar os telefones
+    List<String> allPhones = new ArrayList<>();
+    // percorre a lista de contatos
+    for (ContactFormEntity contactForm : allContacts) {
+        // adiciona o telefone do contato atual na lista de telefones
+        allPhones.add(contactForm.getPhone());
+    }
+    return allPhones;
+}
+```
+
+Este código declara uma função/método chamado findAllPhones que retorna uma lista de strings. Dentro da função, ele busca todos os contatos cadastrados através do método findAll do repositório de contato, armazena em uma lista chamada allContacts. Ele então cria uma nova lista vazia chamada allPhones para armazenar os telefones. Em seguida, ele usa um for loop para percorrer a lista de contatos, e adiciona o telefone de cada contato atual na lista de telefones. Por fim, a função retorna a lista de telefones.
 
 ## Classe Controller
 
@@ -236,8 +271,10 @@ public class ContactFormController {
     //Injeta a classe de serviço
     @Autowired
     private ContactFormService contactFormService;
+```
 
-    //Mapeamento para requisições do tipo POST
+```java
+//Mapeamento para requisições do tipo POST
     @PostMapping
     //Retorna o status 201 (CREATED) quando a requisição for bem sucedida
     @ResponseStatus(HttpStatus.CREATED)
@@ -245,15 +282,28 @@ public class ContactFormController {
         //Chama o método saveContact da classe de serviço e retorna o objeto salvo
         return contactFormService.saveContact(contactFormEntity);
     }
+```
 
-    //Mapeamento para requisições do tipo GET
+-  Este é um método de mapeamento para requisições do tipo POST. Ele é anotado com @PostMapping para indicar que é um método de tratamento para requisições POST. 
+- Quando a requisição for bem sucedida, ele retorna o status HTTP 201 (CREATED) usando a anotação @ResponseStatus (HttpStatus.CREATED).
+-  O método recebe um parâmetro @RequestBody do tipo ContactFormEntity, que é o objeto que será salvo no banco de dados. 
+- Ele chama o método saveContact da classe de serviço e retorna o objeto salvo
+
+```java
+//Mapeamento para requisições do tipo GET
     @GetMapping
     public List<ContactFormEntity> getContact(){
         //Retorna a lista de contatos retornada pelo método getContact da classe de serviço
         return contactFormService.getContact();
     }
+```
 
-    //Mapeamento para requisições do tipo GET com um parâmetro
+- Este é um método de mapeamento para requisições do tipo GET. Ele é anotado com @GetMapping para indicar que é um método de tratamento para requisições GET. 
+- Ele não recebe nenhum parâmetro, pois a requisição GET não tem corpo. 
+- Ele chama o método getContact da classe de serviço e retorna a lista de contatos retornada pelo método.
+
+```java
+//Mapeamento para requisições do tipo GET com um parâmetro
     @GetMapping("/{id}")
     public ResponseEntity<Optional<ContactFormEntity>> findById(@PathVariable Long id) {
         //Chama o método getConactById da classe de serviço com o ID passado como parâmetro
@@ -261,8 +311,14 @@ public class ContactFormController {
         //Retorna o contato encontrado com o status 200 (OK)
         return new ResponseEntity<>(contact, HttpStatus.OK);
     }
+```
 
-    //Mapeamento para requisições do tipo DELETE com um parâmetro
+- Este é um método de mapeamento para requisições do tipo GET que aceita um parâmetro. Ele é anotado com @GetMapping("/{id}") para indicar que é um método de tratamento para requisições GET com um parâmetro específico, o ID do contato. 
+- Ele utiliza @PathVariable para indicar que o parâmetro id na URL será usado como entrada para o método. 
+- Ele chama o método getConactById da classe de serviço com o ID passado como parâmetro e retorna o contato encontrado com o status 200 (OK).
+
+```java
+//Mapeamento para requisições do tipo DELETE com um parâmetro
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         //Chama o método deleteContact da classe de serviço com o ID passado como parâmetro
@@ -270,14 +326,22 @@ public class ContactFormController {
         //Retorna o status 204 (NO CONTENT)
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-    
-    //Método Get para buscar todos os emails
+```
+
+Este é um método para lidar com requisições do tipo DELETE na rota /{id}. Ele usa o annotation @DeleteMapping para mapear a requisição para este método. Ele aceita um parâmetro @PathVariable chamado id, que é o ID do contato a ser excluído. Dentro do método, ele chama o método deleteContact na classe de serviço ContactFormService passando o ID como parâmetro. Isso excluirá o contato correspondente do banco de dados. Finalmente, ele retorna um ResponseEntity com o status HTTP 204 (NO CONTENT), indicando que a operação foi bem-sucedida e não há conteúdo para retornar.
+
+```java
+  //Método Get para buscar todos os emails
 @GetMapping("/emails")
 public ResponseEntity<List<String>> findAllEmails() {
     List<String> emails = contactFormService.findAllEmails();
     return new ResponseEntity<>(emails, HttpStatus.OK);
 }
+```
 
+Este código cria um método GET para buscar todos os telefones armazenados no banco de dados através da chamada ao método findAllPhones() da classe de serviço. O método retorna uma lista de strings contendo os telefones. A resposta é enviada com o status HTTP 200 (OK). Esse método é mapeado para a rota "/phones".
+
+```java
 //Método Get para buscar todos os telefones
 @GetMapping("/phones")
 public ResponseEntity<List<String>> findAllPhones() {
@@ -286,6 +350,10 @@ public ResponseEntity<List<String>> findAllPhones() {
 }
 }
 ```
+
+Este é um método Get, mapeado para requisições do tipo GET com a rota "/phones". Ele chama o método findAllPhones() da classe de serviço ContactFormService e retorna uma lista de strings com todos os telefones de contato cadastrados. O método retorna um objeto ResponseEntity com a lista de telefones e o status HTTP 200 (OK). A anotação @GetMapping indica que este método é chamado quando uma requisição GET é feita para a rota especificada.
+
+
 
 ## Properies.yml
 
@@ -324,3 +392,4 @@ spring:
 
 ```
 
+Espero que você tenha gostado do conteúdo apresentado e que esteja se sentindo mais preparado para entender e implementar esse projeto de exemplo de uma aplicação de formulário de contato. Lembre-se de que, para rodar essa aplicação em sua máquina, é necessário ter o Java 8 ou superior e o Maven instalados, além de configurar o banco H2. Caso tenha alguma dúvida ou precise de ajuda adicional, não hesite em perguntar.
